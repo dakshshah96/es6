@@ -4,6 +4,7 @@
 
 1. Variables — `let`, `const`, `var`
 2. Arrow functions
+3. Template strings
 
 ## Notes
 
@@ -169,4 +170,127 @@ const orderChildren = () => {
     })
     console.log(arguments);
 }
+```
+
+### 3. Template strings
+
+#### Pop in variables/expressions
+
+```js
+const name = 'Snickers';
+const age = 2;
+const sentence = `My dog ${name} is ${age * 7} years old.`;
+console.log(sentence);
+```
+
+#### HTML fragments with template literals
+
+```js
+const person = {
+    name: 'Daksh',
+    job: 'Web Developer',
+    city: 'Surat',
+    bio: 'Daksh is a really cool guy who loves designing stuff for the web!'
+};
+
+const markup = `
+    <div class="person">
+        <h2>
+            ${person.name}
+            <span class="job">${person.job}</span>
+        </h2>
+        <p class="location">${person.city}</p>
+        <p class="bio">${person.bio}</p>
+    </div>
+`;
+
+document.body.innerHTML = markup;
+```
+
+#### Nest template strings inside each other
+
+```js
+const dogs = [
+    { name: 'Snickers', age: 2 },
+    { name: 'Hugo', age: 8 },
+    { name: 'Sunny', age: 1 }
+];
+
+const markup = `
+    <ul class="dogs">
+        ${dogs.map(dog => `<li>${dog.name} is ${dog.age * 7}</li>`).join('')}
+    </ul>
+`;
+
+document.body.innerHTML = markup;
+```
+
+#### if statements (ternary operator) inside template strings
+
+```js
+const song = {
+    name: 'Dying to live',
+    artist: 'Tupac',
+    featuring: 'Biggie Smalls'
+};
+
+const markup = `
+    <div class="song">
+        <p>
+            ${song.name} - ${song.artist}
+            ${song.featuring ? `(Featuring ${song.featuring})` : ''}
+        </p>
+    </div>
+`;
+```
+
+#### Render functions for template strings
+
+```js
+const beer = {
+    name: 'Belgian Wit',
+    brewery: 'Steam Whistle Brewery',
+    keywords: ['pale', 'cloudy', 'spiced', 'crisp']
+};
+
+function renderKeywords(keywords) {
+    return `
+        <ul>
+            ${keywords.map(keyword => `<li>${keyword}</li>`).join('')}
+        </ul>
+    `;
+}
+
+const markup = `
+    <div class="beer">
+        <h2>${beer.name}</h2>
+        <p class="brewery">${beer.brewery}</p>
+        ${renderKeywords(beer.keywords)}
+    </div>
+`;
+```
+
+#### Tagged template literals
+
+* Tags allow you to parse template literals with a function. The first argument of a tag function contains an array of string values. The remaining arguments are related to the expressions.
+* In the end, your function can return your manipulated string (or it can return something completely different).
+* The name of the function used for the tag can be named whatever you want.
+
+```js
+// ability to modify the template before it gets assigned to 'sentence'
+function highlight(strings, ...values) {
+    let str = '';
+    strings.forEach((string, i) => {
+        // example: span tag with class h1 around all values
+        str += `${string} <span class="h1">${values[i] || ''}</span>`;
+    });
+    return str;
+}
+
+const name = 'Snickers';
+const age = 100;
+// tagged with highlight
+const sentence = highlight`My dog ${name} is ${age} years old.`;
+document.body.innerHTML = sentence;
+console.log(sentence);
 ```
