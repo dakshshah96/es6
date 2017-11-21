@@ -5,6 +5,7 @@
 1. Variables — `let`, `const`, `var`
 2. Arrow functions
 3. Template strings
+4. New string methods
 
 ## Notes
 
@@ -293,4 +294,61 @@ const age = 100;
 const sentence = highlight`My dog ${name} is ${age} years old.`;
 document.body.innerHTML = sentence;
 console.log(sentence);
+```
+
+### 4. New string methods
+
+#### `.startsWith()`
+
+* The `startsWith()` method determines whether a string begins with the characters of a specified string, returning `true` or `false` as appropriate.
+
+```js
+// startswith
+var str = 'To be, or not to be, that is the question.';
+
+console.log(str.startsWith('To be'));         // true
+console.log(str.startsWith('not to be'));     // false
+console.log(str.startsWith('not to be', 10)); // true
+```
+
+#### `.endsWith()`
+
+* The `endsWith()` method determines whether a string ends with the characters of a specified string, returning `true` or `false` as appropriate.
+
+```js
+// endswith
+var str = 'To be, or not to be, that is the question.';
+
+console.log(str.endsWith('question.')); // true
+console.log(str.endsWith('to be'));     // false
+console.log(str.endsWith('to be', 19)); // true
+```
+
+#### `.includes()`
+
+* The `includes()` method determines whether one string may be found within another string, returning `true` or `false` as appropriate.
+
+```js
+// includes
+var str = 'To be, or not to be, that is the question.';
+
+console.log(str.includes('To be'));       // true
+console.log(str.includes('question'));    // true
+console.log(str.includes('nonexistent')); // false
+console.log(str.includes('To be', 1));    // false
+console.log(str.includes('TO BE'));       // false
+```
+
+#### `.repeat()`
+
+* The `repeat()` method constructs and returns a new string which contains the specified number of copies of the string on which it was called, concatenated together.
+
+```js
+// repeat
+'abc'.repeat(-1);   // RangeError
+'abc'.repeat(0);    // ''
+'abc'.repeat(1);    // 'abc'
+'abc'.repeat(2);    // 'abcabc'
+'abc'.repeat(3.5);  // 'abcabcabc' (count will be converted to integer)
+'abc'.repeat(1/0);  // RangeError
 ```
