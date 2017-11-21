@@ -6,6 +6,7 @@
 2. Arrow functions
 3. Template strings
 4. New string methods
+5. Destructuring assignment
 
 ## Notes
 
@@ -351,4 +352,94 @@ console.log(str.includes('TO BE'));       // false
 'abc'.repeat(2);    // 'abcabc'
 'abc'.repeat(3.5);  // 'abcabcabc' (count will be converted to integer)
 'abc'.repeat(1/0);  // RangeError
+```
+
+### 5. Destructuring assignment
+
+#### Object destructuring
+
+* Basic destructuring
+
+```js
+const person = {
+    first: 'Daksh',
+    last: 'Shah',
+    country: 'India',
+    city: 'Surat',
+    links: {
+        social: {
+            twitter: '@daksh_shah',
+            quora: 'Daksh-Shah'
+        },
+        web: {
+            portfolio: 'https://daksh.me'
+        }
+    }
+};
+
+// old way
+const first = person.first;
+const last = person.last;
+const twitter = person.links.social.twitter;
+const quora = person.links.social.quora;
+const website = person.links.web.portfolio;
+
+// es6 way
+const { first, last } = person;
+const { twitter, quora } = person.links.social;
+const { portfolio: website } = person.links.web;
+```
+
+* Setting default values
+
+```js
+const settings = { width: 300, color: 'black' } // height, fontSize missing
+// renaming width and height also
+const { w: width = 100, h: height = 100, color = 'blue', fontSize = 25 } = settings;
+```
+
+#### Array destructuring
+
+* Basic destructuring
+
+```js
+const details = ['Daksh Shah', 123, 'daksh.me'];
+
+// old way
+const name = details[0];
+const id = details[1];
+const website = details[2];
+
+// es6 way
+const [name, id, website] = details;
+```
+
+* Swapping variables
+
+```js
+let inRing = 'Hulk Hogan';
+let onSide = 'The Rock';
+
+// swap them
+[inRing, onSide] = [onSide, inRing];
+```
+
+#### Destructuring functions
+
+```js
+function convertCurrency(amount) {
+    const converted = {
+        USD: amount * 0.76,
+        GPB: amount * 0.53,
+        AUD: amount * 1.01,
+        MEX: amount * 13.30
+    };
+    return converted;
+}
+
+// old way
+const hundo = convertCurrency(100);
+
+// es6 way — return multiple
+const { MEX, USD, AUD } = convertCurrency(100);
 ```
