@@ -11,6 +11,7 @@
 7. New array methods
 8. Spread operator (...)
 9. Rest parameters (...)
+10. Object literal upgrades
 
 ## Notes
 
@@ -671,4 +672,72 @@ function convertCurrency(rate, tax, tip, ...amounts) {
 }
 
 convertCurrency(1.54, 10, 23, 52, 1, 56); // [80.08, 1.54, 86.24]
+```
+
+### 10. Object literal upgrades
+
+#### Naming object properties
+
+* You can skip writing the property names when the property and variable names are same.
+
+```js
+const first = 'oreo';
+const last = 'bow';
+const age = 2;
+const breed = 'Labrador Retriever';
+
+// the old way
+const dog = {
+    firstName: first,
+    last: last,
+    age: age,
+    breed: breed,
+    pals: ['Hugo', 'Sunny']
+};
+
+// the es6 way
+const dog = {
+    firstName: first,
+    last,
+    age,
+    breed,
+    pals: ['Hugo', 'Sunny']
+};
+```
+
+#### Naming object methods
+
+* You can skip writing the `function` keyword while defining object methods.
+
+```js
+// the old way
+const modal = {
+    create: function(selector) { },
+    open: function(content) { },
+    close: function(goodbye) { }
+};
+
+// the es6 way
+const modal = {
+    create(selector) { },
+    open(content) { },
+    close(goodbye) { }
+};
+```
+
+#### Computed property names
+
+* Property key names can now be computed inside object literals while defining them:
+
+```js
+const key = 'pocketColor';
+const value = '#ffc600';
+
+const tShirt = {
+    [key]: value,
+    [`${key}Opposite`]: invertColor(value)
+};
+
+console.log(tShirt);
+// Object {pocketColor: "#ffc600", pocketColorOpposite: "#0039ff"}
 ```
