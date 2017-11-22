@@ -9,6 +9,7 @@
 5. Destructuring assignment
 6. The for-of loop
 7. New array methods
+8. Spread operator (...)
 
 ## Notes
 
@@ -605,4 +606,53 @@ function isBelowThreshold(currentValue) {
 }
 
 [1, 30, 40, 29, 10, 13].every(isBelowThreshold); // true
+```
+
+### 8. Spread operator (...)
+
+* The spread operator allows an iterable such as an array expression or string to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected, or an object expression to be expanded in places where zero or more key-value pairs (for object literals) are expected.
+
+#### Spreading strings
+
+* This is the simplest use case for the spread operator:
+
+```js
+const name = 'daksh';
+console.log(...name); // ['d', 'a', 'k', 's', 'h']
+```
+
+#### Spreading arrays
+
+* Using a combination of push, splice, concat, etc. is no longer required to construct a new array from multiple arrays:
+
+```js
+const featured = ['Deep Dish', 'Peperoni', 'Hawaiian'];
+const speciality = ['Meatzza', 'Spicy Mama', 'Margherita'];
+
+// the old way
+let pizzas = [];
+pizzas = pizzas.concat(featured);
+pizzas.push('veg');
+pizzas = pizzas.concat(speciality);
+console.log(pizzas);
+
+// the es6 way
+const pizzas = [...featured, 'veg', ...speciality];
+console.log(pizzas);
+```
+
+#### Spreading into a function
+
+* It is common to use `Function.prototype.apply` in cases where you want to use the elements of an array as arguments to a function. The spread operater makes that process easier:
+
+```js
+const inventors = ['Einstein', 'Newton', 'Galileo'];
+const newInventors = ['Musk', 'Jobs'];
+
+// the wrong way --> ['Einstein', 'Newton', 'Galileo', ['Musk', 'Jobs']]
+inventors.push(newInventors);
+// the old way --> ['Einstein', 'Newton', 'Galileo', 'Musk', 'Jobs']
+inventors.push.apply(inventors, newInventors);
+// the es6 way --> ['Einstein', 'Newton', 'Galileo', 'Musk', 'Jobs']
+inventors.push(...newInventors);
 ```
