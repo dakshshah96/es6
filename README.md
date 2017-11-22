@@ -426,6 +426,9 @@ let onSide = 'The Rock';
 
 #### Destructuring functions
 
+* Sort of return multiple values from a function.
+* Return an object and destructure it while calling the function. You don't need to care about the order or the number of values you need from the returned object.
+
 ```js
 function convertCurrency(amount) {
     const converted = {
