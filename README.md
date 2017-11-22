@@ -7,6 +7,7 @@
 3. Template strings
 4. New string methods
 5. Destructuring assignment
+6. The for-of loop
 
 ## Notes
 
@@ -446,3 +447,84 @@ const hundo = convertCurrency(100);
 // es6 way — return multiple
 const { MEX, USD, AUD } = convertCurrency(100);
 ```
+
+### 6. The for-of loop
+
+* The `for...of` statement creates a loop iterating over iterable objects (including `Array`, `Map`, `Set`, `String`, `TypedArray`, arguments object and so on), invoking a custom iteration hook with statements to be executed for the value of each distinct property.
+
+```js
+const cuts = ['Chuck', 'Brisket', 'Shank', 'Short Rib'];
+
+// the old way
+for (let i = 0; i < cuts.length; i++) {
+    console.log(cuts[i]);
+}
+
+// cannot abort or skip loop
+cuts.forEach((cut) => {
+    console.log(cut);
+    if (cut === 'Brisket') {
+        continue;
+    }
+});
+
+// iterates over everything (prototypes, properties, etc.)
+for (const index in cuts) {
+    console.log(cuts[index]);
+}
+
+// for-of loop (iterates only over items)
+for (const cut of cuts) {
+    if (cut === 'Brisket') {
+        continue;
+    }
+    console.log(cut);
+}
+```
+
+#### Iterating over array using `entries()`
+
+```js
+const cuts = ['Chuck', 'Brisket', 'Shank', 'Short Rib'];
+
+for (const [i, cut] of cuts.entries()) {
+    console.log(`${cut} is the ${i + 1} item`);
+}
+```
+
+#### Iterating over the arguments object
+
+```js
+function addUpNumbers() {
+    let total = 0;
+    for (num of arguments) {
+        total += num;
+    }
+    return total;
+}
+
+addUpNumbers(10, 23, 4, 55, 28, 13, 39, 71);
+```
+
+#### Iterating over DOM elements
+
+```js
+<p>I'm p 01</p>
+<p>I'm p 02</p>
+<p>I'm p 03</p>
+<p>I'm p 04</p>
+<p>I'm p 05</p>
+
+const ps = document.querySelectorAll('p');
+for (const paragraph of ps) {
+    paragraph.addEventListener('click', function() {
+        console.log(this.textContent);
+    });
+}
+```
+
+#### Iterating over objects
+
+* for-of cannot be used to iterate directly over objects.
+* Alternative methods such as a for-in loop has to be used.
+* `Object.entries()` will be implemented in ES2017 making it possible to iterate over objects just like you would over an array.
