@@ -10,6 +10,7 @@
 6. The for-of loop
 7. New array methods
 8. Spread operator (...)
+9. Rest parameters (...)
 
 ## Notes
 
@@ -655,4 +656,19 @@ inventors.push(newInventors);
 inventors.push.apply(inventors, newInventors);
 // the es6 way --> ['Einstein', 'Newton', 'Galileo', 'Musk', 'Jobs']
 inventors.push(...newInventors);
+```
+
+### 9. Rest parameters (...)
+
+* The rest parameter syntax allows us to represent an indefinite number of arguments as an array.
+* Rest parameters are only the ones that haven't been given a separate name, while the `arguments` object contains all arguments passed to the function.
+* The `arguments` object is not a real array, while rest parameters are `Array` instances.
+
+```js
+function convertCurrency(rate, tax, tip, ...amounts) {
+    console.log(rate, tax, tip, amounts); // 1.54 10 23 [52, 1, 56]
+    return amounts.map(amount => amount * rate);
+}
+
+convertCurrency(1.54, 10, 23, 52, 1, 56); // [80.08, 1.54, 86.24]
 ```
