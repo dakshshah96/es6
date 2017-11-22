@@ -8,6 +8,7 @@
 4. New string methods
 5. Destructuring assignment
 6. The for-of loop
+7. New array methods
 
 ## Notes
 
@@ -528,3 +529,80 @@ for (const paragraph of ps) {
 * for-of cannot be used to iterate directly over objects.
 * Alternative methods such as a for-in loop has to be used.
 * `Object.entries()` will be implemented in ES2017 making it possible to iterate over objects just like you would over an array.
+
+### 7. New array methods
+
+#### `Array.from()` and `Array.of()`
+
+* They're on `Array` and not on the array prototype.
+* The `Array.from()` method creates a new `Array` instance from an array-like or iterable object:
+
+```js
+<div class="people">
+    <p>Daksh</p>
+    <p>Mark</p>
+    <p>Jeff</p>
+</div>
+
+// people is an array-like NodeList but doesn't have all prototype methods of an array
+const people = document.querySelectorAll('.people p');
+// peopleArray is a true Array now
+// Array.from() also takes a map function as an optional argument
+const peopleArray = Array.from(people, person => {
+    console.log(person);
+    return person.textContent;
+});
+```
+
+* The `Array.of()` method creates a new `Array` instance with a variable number of arguments, regardless of number or type of the arguments:
+
+```js
+const ages = Array.of(12, 5, 23, 67, 89);
+console.log(ages);
+// -> [12, 5, 23, 67, 89]
+```
+
+#### `.find()` and `.findIndex()`
+
+* The `find()` method returns the **value** of the first element in the array that satisfies the provided testing function. Otherwise `undefined` is returned:
+
+```js
+function isBigEnough(element) {
+    return element >= 15;
+}
+
+[12, 5, 8, 130, 44].find(isBigEnough); // 130
+```
+
+* The `findIndex()` method returns the **index** of the first element in the array that satisfies the provided testing function. Otherwise -1 is returned:
+
+```js
+function findFirstLargeNumber (element) {
+    return element > 13;
+}
+
+[5, 12, 8, 130, 44].findIndex(findFirstLargeNumber); // 3
+```
+
+#### `.some()` and `.every()`
+
+* The `some()` method tests whether at least one element in the array passes the test implemented by the provided function:
+
+```js
+function isBiggerThan10(element, index, array) {
+    return element > 10;
+}
+
+[2, 5, 8, 1, 4].some(isBiggerThan10);  // false
+[12, 5, 8, 1, 4].some(isBiggerThan10); // true
+```
+
+* The `every()` method tests whether all elements in the array pass the test implemented by the provided function:
+
+```js
+function isBelowThreshold(currentValue) {
+    return currentValue <= 40;
+}
+
+[1, 30, 40, 29, 10, 13].every(isBelowThreshold); // true
+```
