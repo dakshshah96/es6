@@ -13,6 +13,7 @@
 9. Rest parameters (...)
 10. Object literal upgrades
 11. Promises
+12. Symbols
 
 ## Notes
 
@@ -821,4 +822,33 @@ Promise.all([p1, p2, p3])
     .then(values => {
         console.log(values); // [3, 1337, "foo"]
     });
+```
+
+### 12. Symbols
+
+* New primitive data type added to ES6 in addition to `Boolean`, `Null`, `Undefined`, `Number`, `String`.
+* Values of this type can be used to make object properties that are anonymous.  This data type is used as the key for an object property when the property is intended to be private, for the internal use of a class or an object type.
+* When a symbol value is used as the identifier in a property assignment, the property (like the symbol) is anonymous; and also is non-enumerable.
+* The property can be accessed by using the original symbol value that created it, or by iterating on the result array of `Object.getOwnPropertySymbols()`.
+
+```js
+const classRoom = {
+    [Symbol('Mark')]: { grade: 50, gender: 'Male' },
+    [Symbol('Olivia')]: { grade: 23, gender: 'Female' },
+    // unique Olivia
+    [Symbol('Olivia')]: { grade: 34, gender: 'Female' }
+};
+
+// you get nothing
+for (person in classRoom) {
+    console.log(person);
+}
+
+// grab all symbols off of classRoom object (can't see any data though)
+const syms = Object.getOwnPropertySymbols(classRoom);
+console.log(syms);
+// -> [Symbol(Mark), Symbol(Olivia), Symbol(Olivia)]
+const data = syms.map(sym => classRoom[sym]);
+console.log(data);
+// -> [{grade: 50, gender: "Male"}, {grade: 23, gender: "Female"}, {grade: 34, gender: "Female"}]
 ```
