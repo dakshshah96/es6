@@ -12,6 +12,7 @@
 8. Spread operator (...)
 9. Rest parameters (...)
 10. Object literal upgrades
+11. Promises
 
 ## Notes
 
@@ -740,4 +741,84 @@ const tShirt = {
 
 console.log(tShirt);
 // Object {pocketColor: "#ffc600", pocketColorOpposite: "#0039ff"}
+```
+
+### 11. Promises
+
+* A `Promise` is an object representing the eventual completion or failure of an asynchronous operation.
+
+#### Attaching callbacks to promises
+
+* Essentially, a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function:
+
+```js
+const usersPromise = fetch('https://reqres.in/api/users');
+
+usersPromise
+    // .then runs on successful fetch
+    .then(data => data.json())
+    .then(data => { console.log(data) })
+    // .catch runs in case of an error
+    .catch((err) => {
+        console.error(err);
+    });
+```
+
+#### Building promises
+
+* A `Promise` object is created using the `new` keyword and its constructor. This constructor takes as its argument a function, called the "executor function".
+* `resolve` is called when the asynchronous task completes successfully and returns the results of the task as a value.
+* `reject` is called when the task fails, and returns the reason for failure, which is typically an error object.
+
+```js
+// executor function takes two args (resolve, reject)
+const p = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        // resolve('Daksh is cool');
+        reject(Error('Err Daksh isn\'t cool'));
+    }, 1000);
+});
+
+p
+    // resolve
+    .then(data => {
+        console.log(data);
+    })
+    // reject
+    .catch(err => {
+        console.error(err);
+    });
+```
+
+#### Chaining promises + flow control
+
+* A common need is to execute two or more asynchronous operations back to back, where each subsequent operation starts when the previous operation succeeds, with the result from the previous step. We accomplish this by creating a *promise chain*.
+* Always return promises up, otherwise callbacks won't chain, and errors won't be caught.
+
+```js
+doSomething()
+    .then(result => doSomethingElse(result))
+    .then(newResult => doThirdThing(newResult))
+    .then(finalResult => {
+        console.log(`Got the final result: ${finalResult}`);
+    })
+    .catch(failureCallback);
+```
+
+#### Multiple promises with `Promise.all()`
+
+* The `Promise.all()` method returns a single `Promise` that resolves when all of the promises in the `iterable` argument have resolved or when the iterable argument contains no promises.
+* It rejects with the reason of the first promise that rejects.
+
+```js
+const p1 = Promise.resolve(3);
+const p2 = 1337;
+const p3 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 100, 'foo');
+});
+
+Promise.all([p1, p2, p3])
+    .then(values => {
+        console.log(values); // [3, 1337, "foo"]
+    });
 ```
