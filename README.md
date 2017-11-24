@@ -15,6 +15,7 @@
 11. Promises
 12. Symbols
 13. Classes
+14. Generators
 
 ## Notes
 
@@ -989,4 +990,80 @@ const movies = new MovieCollection('Daksh\'s Fav Movies',
 console.log(movies.name); // "Daksh's Fav Movies"
 movies.add({ name: 'Titanic', stars: 5 });
 movies.topRated();
+```
+
+### 14. Generators
+
+* Generators are functions which can be exited and later re-entered. Their context (variable bindings) will be saved across re-entrances.
+* `yield` can be considered a temporary `return`.
+* A generator which has returned (`return`) will not yield any more values.
+
+```js
+const inventors = [
+    { first: 'Albert', last: 'Einstein', year: 1879 },
+    { first: 'Isaac', last: 'Newton', year: 1643 },
+    { first: 'Galileo', last: 'Galilei', year: 1564 },
+    { first: 'Marie', last: 'Curie', year: 1867 },
+    { first: 'Johannes', last: 'Kepler', year: 1571 },
+    { first: 'Nicolaus', last: 'Copernicus', year: 1473 },
+    { first: 'Max', last: 'Planck', year: 1858 },
+];
+
+// define generator function
+function* loop(arr) {
+    for (const item of arr) {
+        yield item;
+    }
+}
+
+// Generator object returned
+const inventorGen = loop(inventors);
+// returns first object in array and done status
+inventorGen.next(); {value: Object, done: false}
+// returns second object in array and done status
+inventorGen.next(); {value: Object, done: false}
+// returns third object
+inventorGen.next().value(); // {first: 'Galileo', last: 'Galilei', year: 1564}
+```
+
+#### Using generators for ajax flow control
+
+* Generators can be used for managing waterfall ajax requests:
+
+```js
+function ajax(url) {
+    fetch(url)
+        .then(data => data.json())
+        .then(data => dataGen.next(data))
+}
+
+function* steps() {
+    const beers = yield ajax('http://api.react.beer/v2/search?q=hops&type=beer');
+    const daksh = yield ajax('https://api.github.com/users/dakshshah96');
+    const fatJoe = yield ajax('https://api.discogs.com/artists/51988');
+}
+
+// Generator object created
+const dataGen = steps();
+// kick it off (starts with beer api)
+dataGen.next();
+```
+
+#### Looping generators with for-of
+
+```js
+function* lyrics() {
+    yield `On a dark desert highway, cool wind in my hair`;
+    yield `Warm smell of colitas, rising up through the air`;
+    yield `Up ahead in the distance, I saw a shimmering light`;
+    yield `My head grew heavy and my sight grew dim`;
+    yield `I had to stop for the night.`;
+}
+
+const achy = lyrics();
+
+// for-of already has next()
+for (const line of achy) {
+    console.log(line);
+}
 ```
