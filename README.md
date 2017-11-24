@@ -14,6 +14,7 @@
 10. Object literal upgrades
 11. Promises
 12. Symbols
+13. Classes
 
 ## Notes
 
@@ -851,4 +852,141 @@ console.log(syms);
 const data = syms.map(sym => classRoom[sym]);
 console.log(data);
 // -> [{grade: 50, gender: "Male"}, {grade: 23, gender: "Female"}, {grade: 34, gender: "Female"}]
+```
+
+### 13. Classes
+
+#### Prototypal inheritance review
+
+* In JavaScript, any function can be added to an object in the form of a property.
+* An inherited function acts just as any other property, including property shadowing.
+
+```js
+function Dog(name, breed) {
+    // associated with the instance (snickers, sunny)
+    this.name = name;
+    this.breed = breed;
+}
+// method on the prototype (Dog)
+Dog.prototype.bark = function() {
+    console.log(`Bark Bark! My name is ${this.name}`)
+}
+
+const snickers = new Dog('Snickers', 'King Charles');
+const sunny = new Dog('Sunny', 'Golden Doodle');
+
+snickers.bark();
+// -> Bark Bark! My name is Snickers
+```
+
+#### Basics of classes
+
+* Classes in ES6 are primarily syntactical sugar over JavaScript's existing prototype-based inheritance. The class syntax is **not** introducing a new object-oriented inheritance model to JavaScript.
+* Class syntax has two components: class expressions and class declarations. Class expressions are
+* Static methods are called without instantiating their class and **cannot** be called through a class instance. Static methods are often used to create utility functions for an application.
+
+```js
+// class declaration
+class Dog {
+    constructor(name, breed) {
+        this.name = name;
+        this.breed = breed;
+    }
+    bark() {
+        console.log(`Bark Bark! My name is ${this.name}`);
+    }
+    cuddle() {
+        console.log(`I love you owner!`);
+    }
+    // static method -> Dog.info();
+    static info() {
+        console.log('A dog is better than a cat');
+    }
+    // string returned when dogProperty.description is looked up
+    get description() {
+        return `${this.name} is a ${this.breed} type of dog`;
+    }
+    // called when value is assigned to dogProperty.nicknames
+    set nicknames(value) {
+        this.nick = value.trim();
+    }
+    // modified string returned when dogProperty.nicknames is looked up
+    get nicknames() {
+        return this.nick.toUpperCase();
+    }
+}
+
+const snickers = new Dog('Snickers', 'King Charles');
+const sunny = new Dog('Sunny', 'Golden Doodle');
+```
+
+#### Extending classes
+
+* The `extends` keyword is used in class declarations or class expressions to create a class which is a child of another class.
+
+```js
+// base class
+class Animal {
+    constructor(name) {
+        this.name = name;
+        this.thirst = 100;
+        this.belly = [];
+    }
+    drink() {
+        this.thirst -= 10;
+        return this.thirst;
+    }
+    eat(food) {
+        this.belly.push(food);
+        return this.belly;
+    }
+}
+
+// Dog extended from Animal
+class Dog extends Animal {
+    constructor() {
+        // make an Animal first
+        super(name);
+        this.breed = breed;
+    }
+    // additional method
+    bark() {
+        console.log('Bark bark I\'m a dog');
+    }
+}
+
+const rhino = new Animal('Rhiney');
+const snickers = new Dog('Snickers', 'King Charles');
+// eat() is still available
+snickers.eat('plastic');
+```
+
+#### Extending arrays with classes
+
+* Arrays in ES6 can be extended/modified to have class-like features such as constructors and methods:
+
+```js
+class MovieCollection extends Array {
+    constructor(name, ...items) {
+        super(...items);
+        this.name = name;
+    }
+    add(movie) {
+        this.push(movie);
+    }
+    topRated(limit = 10) {
+        return this.sort((a, b) => (a.stars > b.stars ? -1 : 1)).slice(0, limit);
+    }
+}
+
+const movies = new MovieCollection('Daksh\'s Fav Movies',
+    { name: 'The Shawshank Redemption', stars: 10 },
+    { name: 'Green Lantern', stars: 1 },
+    { name: 'Justice League', stars: 7 },
+    { name: 'Good Will Hunting', stars: 8 }
+);
+
+console.log(movies.name); // "Daksh's Fav Movies"
+movies.add({ name: 'Titanic', stars: 5 });
+movies.topRated();
 ```
