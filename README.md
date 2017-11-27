@@ -20,6 +20,7 @@
 16. Sets
 17. Maps
 18. Async Await
+19. New object methods
 
 ## Notes
 
@@ -1247,3 +1248,33 @@ getData(['dakshshah96', 'addyosmani']);
 
 * Async/Await does not make Promises obsolete. When working with Async/Await we are still using Promises under the hood. Using a single promise is straightforward. However, when we need to program complicated asynchronous logic, we may end up combining a few promises. Writing all the `then` clauses and anonymous callbacks can easily get out of hand.
 * Async/Await doesn't always cut it. For example, when we need to make multiple independent asynchronous calls and wait for all of them to finish. To send all requests at the same time a `Promise.all()` is required. This will make sure we still have all the results before continuing, but the asynchronous calls will be firing in parallel, not one after another.
+
+### 19. New object methods
+
+* The `Object.values()` method returns an array of a given object's own enumerable property values, in the same order as that provided by a `for...in` loop (the difference being that a for-in loop enumerates properties in the prototype chain as well).
+* The `Object.entries()` method returns an array of a given object's own enumerable property [key, value] pairs, in the same order as that provided by a `for...in` loop (the difference being that a for-in loop enumerates properties in the prototype chain as well).
+
+```js
+const inventory = {
+    backpacks: 10,
+    jeans: 23,
+    hoodies: 4,
+    shoes: 11
+};
+
+// using Object.keys for nav
+const navKeys = Object.keys(inventory); // ["backpacks", "jeans", "hoodies", "shoes"]
+const nav = navKeys.map(item => `<li>${item}</li>`).join('');
+console.log(nav);
+
+// using the new Object.values() method
+const totalInventoryVals = Object.values(inventory); // [10, 23, 4, 11]
+const totalInventory = totalInventoryVals.reduce((a, b) => a + b);
+console.log(totalInventory); // 48
+
+// using the new Object.entries() method
+const inventoryEntries = Object.entries(inventory); // [["backpacks", 10], ["jeans", 23], ["hoodies", 4], ["shoes", 11]]
+inventoryEntries.forEach(([key, val]) => {
+    console.log(key, val);
+});
+```
