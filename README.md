@@ -54,21 +54,20 @@ console.log(foo.bar);
 * If `let` and `const` variables are accessed before they are created, it'll cause an error and break the code. This is the temporal dead zone, where you cannot access a variable before it is defined. This does not mean that they are not hoisted which is proven by this valid piece of code:
 
 ```js
-function readThere (){
+function readThere() {
     // there used before it is declared (it is not executed)
     return there;
 }
 let there = 'dragons';
-console.log(readThere());
-// <- 'dragons'
+console.log(readThere()); // "dragons"
 ```
 
 #### Best practices
 
-* Use `const` by default
-* Only use `let` if rebinding is needed
-* `var` shouldn't be used in ES6
-* Use `Object.freeze(obj);` to make an object immutable. **Not** `const`.
+* Use `const` by default.
+* Only use `let` if rebinding is needed.
+* `var` shouldn't be used in ES6.
+* Do **not** use `const` to make an object immutable. Use `Object.freeze(obj);`.
 
 ### 2. Arrow functions
 
@@ -534,19 +533,21 @@ addUpNumbers(10, 23, 4, 55, 28, 13, 39, 71);
 
 #### Iterating over DOM elements
 
-```js
+```html
 <p>I'm p 01</p>
 <p>I'm p 02</p>
 <p>I'm p 03</p>
 <p>I'm p 04</p>
 <p>I'm p 05</p>
 
+<script>
 const ps = document.querySelectorAll('p');
 for (const paragraph of ps) {
     paragraph.addEventListener('click', function() {
         console.log(this.textContent);
     });
 }
+</script>
 ```
 
 #### Iterating over objects
@@ -562,13 +563,14 @@ for (const paragraph of ps) {
 * They're on `Array` and not on the array prototype.
 * The `Array.from()` method creates a new `Array` instance from an array-like or iterable object:
 
-```js
+```html
 <div class="people">
     <p>Daksh</p>
     <p>Mark</p>
     <p>Jeff</p>
 </div>
 
+<script>
 // people is an array-like NodeList but doesn't have all prototype methods of an array
 const people = document.querySelectorAll('.people p');
 // peopleArray is a true Array now
@@ -577,14 +579,14 @@ const peopleArray = Array.from(people, person => {
     console.log(person);
     return person.textContent;
 });
+</script>
 ```
 
 * The `Array.of()` method creates a new `Array` instance with a variable number of arguments, regardless of number or type of the arguments:
 
 ```js
 const ages = Array.of(12, 5, 23, 67, 89);
-console.log(ages);
-// -> [12, 5, 23, 67, 89]
+console.log(ages); // [12, 5, 23, 67, 89]
 ```
 
 #### `.find()` and `.findIndex()`
@@ -1113,18 +1115,23 @@ const phoneNumbers = new Proxy({}, phoneHandler);
 
 ```js
 const brunch = new Set();
+
 // people start coming in
 brunch.add('Daksh');
 brunch.add('Mark');
 brunch.add('Jeff');
+
 // ready to open
 const line = brunch.values();
+
 // start seating people
 console.log(line.next().value);
 console.log(line.next().value);
+
 // new people show up
 brunch.add('Larry');
 brunch.add('Elon');
+
 // seat people
 console.log(line.next().value);
 console.log(line.next().value);
@@ -1143,6 +1150,7 @@ let dog2 = { name: 'Sunny', age: 1 };
 
 const weakSauce = new WeakSet([dog1, dog2]);
 console.log(weakSauce);
+
 dog1 = null;
 // dog1 has been removed
 console.log(weakSauce);
