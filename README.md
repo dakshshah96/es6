@@ -18,6 +18,7 @@
 14. Generators
 15. Proxies
 16. Sets
+17. Maps
 
 ## Notes
 
@@ -1130,4 +1131,49 @@ console.log(weakSauce);
 dog1 = null;
 // dog1 has been removed
 console.log(weakSauce);
+```
+
+### 17. Maps
+
+* The `Map` object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
+* The keys of an `Object` are `Strings` and `Symbols`, whereas they can be any value for a `Map`, including functions, objects, and any primitive.
+* A `Map` is an iterable and can thus be directly iterated, whereas iterating over an `Object` requires obtaining its keys in some fashion and iterating over them.
+
+```js
+const clickCounts = new Map();
+// get all buttons from HTML
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(button => {
+    // the key here is the actual button
+    clickCounts.set(button, 0);
+    button.addEventListener('click', function() {
+        // current count
+        const val = clickCounts.get(this);
+        // update count
+        clickCounts.set(this, val + 1);
+    });
+});
+```
+
+#### `WeakMap`
+
+* The `WeakMap` object is a collection of key/value pairs in which the keys are weakly referenced.  The keys must be objects and the values can be arbitrary values.
+* References to key objects in the `WeakMap` are held weakly. If there is no other reference to the key object stored in the `WeakMap`, they can be garbage collected. That also means that there is no list of current object keys stored in the collection.
+* `WeakMap` keys are not enumerable.
+
+```js
+let dog1 = { name: 'Snickers' };
+let dog2 = { name: 'Sunny' };
+
+const strong = new Map();
+const weak = new WeakMap();
+
+strong.set(dog1, 'Snickers is the best!');
+weak.set(dog2, 'Sunny is the 2nd best!');
+
+// strong still has dog1 in it even though it doesn't exist
+dog1 = null;
+// weak no longer has dog2 in it (garbage collected)
+dog2 = null;
 ```
