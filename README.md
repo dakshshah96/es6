@@ -367,6 +367,19 @@ console.log(str.includes('TO BE'));       // false
 'abc'.repeat(1/0);  // RangeError
 ```
 
+### `.padStart()` and `.padEnd()`
+
+* The `padStart()` method pads the current string with another string (repeated, if needed) so that the resulting string reaches the given length. The padding is applied from the start (left) of the current string.
+* The `padEnd()` method pads the current string with a given string (repeated, if needed) so that the resulting string reaches a given length. The padding is applied from the end (right) of the current string.
+
+```js
+const strings = ['short', 'medium size', 'this is really really long'];
+const longestString = strings.sort(str => str.length).map(str => str.length)[0];
+
+// all strings aligned right
+strings.forEach(str => console.log(str.padStart(longestString)));
+```
+
 ### 5. Destructuring assignment
 
 #### Object destructuring
