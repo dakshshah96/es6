@@ -17,6 +17,7 @@
 13. Classes
 14. Generators
 15. Proxies
+16. Sets
 
 ## Notes
 
@@ -1087,4 +1088,46 @@ const phoneHandler = {
 
 // empty target object {}
 const phoneNumbers = new Proxy({}, phoneHandler);
+```
+
+### 16. Sets
+
+* `Set` objects are collections of values. You can iterate through the elements of a set in insertion order. A value in the `Set` may **only occur once**; it is unique in the `Set`'s collection.
+* Values are not index based and need to accessed via a for-of loop or a generator.
+
+```js
+const brunch = new Set();
+// people start coming in
+brunch.add('Daksh');
+brunch.add('Mark');
+brunch.add('Jeff');
+// ready to open
+const line = brunch.values();
+// start seating people
+console.log(line.next().value);
+console.log(line.next().value);
+// new people show up
+brunch.add('Larry');
+brunch.add('Elon');
+// seat people
+console.log(line.next().value);
+console.log(line.next().value);
+console.log(line.next().value);
+```
+
+#### `WeakSet`
+
+* The `WeakSet` object lets you store weakly held objects in a collection.
+* References to objects in the collection are held weakly. If there is no other reference to an object stored in the `WeakSet`, they can be garbage collected. That also means that there is no list of current objects stored in the collection.
+* `WeakSets` are not enumerable.
+
+```js
+let dog1 = { name: 'Snickers', age: 3 };
+let dog2 = { name: 'Sunny', age: 1 };
+
+const weakSauce = new WeakSet([dog1, dog2]);
+console.log(weakSauce);
+dog1 = null;
+// dog1 has been removed
+console.log(weakSauce);
 ```
