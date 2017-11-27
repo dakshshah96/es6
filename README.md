@@ -2,25 +2,25 @@
 
 ## Table of Contents
 
-1. Variables — `let`, `const`, `var`
-2. Arrow functions
-3. Template strings
-4. New string methods
-5. Destructuring assignment
-6. The for-of loop
-7. New array methods
-8. Spread operator (...)
-9. Rest parameters (...)
-10. Object literal upgrades
-11. Promises
-12. Symbols
-13. Classes
-14. Generators
-15. Proxies
-16. Sets
-17. Maps
-18. Async Await
-19. New object methods
+1. [Variables — `let`, `const`, `var`](#1-variables-let-const-var)
+2. [Arrow functions](#2-arrow-functions)
+3. [Template strings](#3-template-strings)
+4. [New string methods](#4-new-string-methods)
+5. [Destructuring assignment](#5-destructuring-assignment)
+6. [The for-of loop](#6-the-for-of-loop)
+7. [New array methods](#7-new-array-methods)
+8. [Spread operator (...)](#8-spread-operator-)
+9. [Rest parameters (...)](#9-rest-parameters-)
+10. [Object literal upgrades](#10-object-literal-upgrades)
+11. [Promises](#11-promises)
+12. [Symbols](#12-symbols)
+13. [Classes](#13-classes)
+14. [Generators](#14-generators)
+15. [Proxies](#15-proxies)
+16. [Sets](#16-sets)
+17. [Maps](#17-maps)
+18. [Async Await](#18-async-await)
+19. [New object methods](#19-new-object-methods)
 
 ## Notes
 
