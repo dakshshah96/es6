@@ -19,6 +19,7 @@
 15. Proxies
 16. Sets
 17. Maps
+18. Async Await
 
 ## Notes
 
@@ -1177,3 +1178,59 @@ dog1 = null;
 // weak no longer has dog2 in it (garbage collected)
 dog2 = null;
 ```
+
+### 18. Async Await
+
+* Async/Await is built on top of Promises and is compatible with all existing Promise-based APIs.
+* `async` automatically transforms a regular function into a `Promise`. When called, async functions resolve with whatever is returned in their body. They also enable the use of `await`.
+* When placed in front of a Promise call, `await` forces the rest of the code to wait until that `Promise` finishes and returns a result. Await works only with Promises, it does not work with callbacks and can only be used inside `async` functions.
+* A standard `try`/`catch` block is used to handle errors.
+
+```js
+var rp = require('request-promise');
+// Encapsulate the solution in an async function
+async function solution() {
+    try {
+        const promiseResult = await Promise.reject('Error');
+    } catch (e) {
+        console.log(e);
+    }
+
+    // Wait for the first HTTP call and print the result
+    console.log(await rp('http://example.com/'));
+
+    // Spawn the HTTP calls without waiting for them - run them concurrently
+    const call2Promise = rp('http://example.com/');  // Does not wait!
+    const call3Promise = rp('http://example.com/');  // Does not wait!
+
+    // After they are both spawned - wait for both of them
+    const response2 = await call2Promise;
+    const response3 = await call3Promise;
+
+    console.log(response2);
+    console.log(response3);
+}
+
+// Call the async function
+solution().then(() => console.log('Finished'));
+```
+
+#### Waiting on multiple promises
+
+```js
+async function getData(names) {
+    // fetch each user and get all promises
+    const promises = names.map(name => fetch(`https://api.github.com/users/${name}`)).then(r => r.json());
+    // awaiting all promises to resolve
+    const people = await Promise.all(promises);
+    console.log(people);
+}
+
+// pass array of users to fetch
+getData(['dakshshah96', 'addyosmani']);
+```
+
+#### Async Await vs Promises
+
+* Async/Await does not make Promises obsolete. When working with Async/Await we are still using Promises under the hood. Using a single promise is straightforward. However, when we need to program complicated asynchronous logic, we may end up combining a few promises. Writing all the `then` clauses and anonymous callbacks can easily get out of hand.
+* Async/Await doesn't always cut it. For example, when we need to make multiple independent asynchronous calls and wait for all of them to finish. To send all requests at the same time a `Promise.all()` is required. This will make sure we still have all the results before continuing, but the asynchronous calls will be firing in parallel, not one after another.
