@@ -16,6 +16,7 @@
 12. Symbols
 13. Classes
 14. Generators
+15. Proxies
 
 ## Notes
 
@@ -1066,4 +1067,24 @@ const achy = lyrics();
 for (const line of achy) {
     console.log(line);
 }
+```
+
+### 15. Proxies
+
+* The `Proxy` object is used to define custom behavior for fundamental operations (e.g. property lookup, assignment, enumeration, function invocation, etc).
+
+```js
+const phoneHandler = {
+    // clean phone numbers when someone sets it
+    set(target, name, value) {
+        target[name] = value.match(/[0-9]/g).join('');
+    },
+    // consistently format phone numbers on get
+    get(target, name) {
+        return target[name].replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
+    }
+}
+
+// empty target object {}
+const phoneNumbers = new Proxy({}, phoneHandler);
 ```
