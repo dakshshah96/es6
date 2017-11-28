@@ -69,6 +69,10 @@ console.log(readThere()); // "dragons"
 * `var` shouldn't be used in ES6.
 * Do **not** use `const` to make an object immutable. Use `Object.freeze(obj);`.
 
+#### Recommended reads
+
+* [ES6 const is not about immutability](https://mathiasbynens.be/notes/es6-const)
+
 ### 2. Arrow functions
 
 * Arrow functions are less verbose than traditional function expressions:
@@ -186,6 +190,11 @@ const orderChildren = () => {
     console.log(arguments);
 }
 ```
+
+#### Recommended reads
+
+* [Everything you wanted to know about JavaScript scope](https://toddmotto.com/everything-you-wanted-to-know-about-javascript-scope/)
+* [ES6 arrow functions, syntax and lexical scoping](https://toddmotto.com/es6-arrow-functions-syntaxes-and-lexical-scoping/)
 
 ### 3. Template strings
 
@@ -556,6 +565,10 @@ for (const paragraph of ps) {
 * Alternative methods such as a for-in loop has to be used.
 * `Object.entries()` will be implemented in ES2017 making it possible to iterate over objects just like you would over an array.
 
+#### Recommended reads
+
+* [for..in versus for..of Loops](https://bitsofco.de/for-in-vs-for-of/)
+
 ### 7. New array methods
 
 #### `Array.from()` and `Array.of()`
@@ -682,6 +695,10 @@ inventors.push.apply(inventors, newInventors);
 // the es6 way --> ['Einstein', 'Newton', 'Galileo', 'Musk', 'Jobs']
 inventors.push(...newInventors);
 ```
+
+#### Recommended reads
+
+* [6 Great Uses of the Spread Operator](https://davidwalsh.name/spread-operator)
 
 ### 9. Rest parameters (...)
 
@@ -846,6 +863,10 @@ Promise.all([p1, p2, p3])
     });
 ```
 
+#### Recommended reads
+
+* [JavaScript Promises for Dummies](https://scotch.io/tutorials/javascript-promises-for-dummies)
+
 ### 12. Symbols
 
 * New primitive data type added to ES6 in addition to `Boolean`, `Null`, `Undefined`, `Number`, `String`.
@@ -874,6 +895,10 @@ const data = syms.map(sym => classRoom[sym]);
 console.log(data);
 // -> [{grade: 50, gender: "Male"}, {grade: 23, gender: "Female"}, {grade: 34, gender: "Female"}]
 ```
+
+#### Recommended reads
+
+* [Metaprogramming in ES6: Symbols and why they're awesome](https://www.keithcirkel.co.uk/metaprogramming-in-es6-symbols/)
 
 ### 13. Classes
 
@@ -1012,6 +1037,10 @@ movies.add({ name: 'Titanic', stars: 5 });
 movies.topRated();
 ```
 
+#### Recommended reads
+
+* [Better JavaScript with ES6, Pt. II: A Deep Dive into Classes](https://scotch.io/tutorials/better-javascript-with-es6-pt-ii-a-deep-dive-into-classes)
+
 ### 14. Generators
 
 * Generators are functions which can be exited and later re-entered. Their context (variable bindings) will be saved across re-entrances.
@@ -1088,6 +1117,10 @@ for (const line of achy) {
 }
 ```
 
+#### Recommended reads
+
+* [The Basics Of ES6 Generators](https://davidwalsh.name/es6-generators)
+
 ### 15. Proxies
 
 * The `Proxy` object is used to define custom behavior for fundamental operations (e.g. property lookup, assignment, enumeration, function invocation, etc).
@@ -1107,6 +1140,10 @@ const phoneHandler = {
 // empty target object {}
 const phoneNumbers = new Proxy({}, phoneHandler);
 ```
+
+#### Recommended reads
+
+* [Proxy - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 
 ### 16. Sets
 
@@ -1156,6 +1193,10 @@ dog1 = null;
 console.log(weakSauce);
 ```
 
+#### Recommended reads
+
+* [A look at ES6 Sets](https://www.barbarianmeetscoding.com/blog/2016/05/12/a-look-at-es6-sets/)
+
 ### 17. Maps
 
 * The `Map` object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
@@ -1200,6 +1241,10 @@ dog1 = null;
 // weak no longer has dog2 in it (garbage collected)
 dog2 = null;
 ```
+
+#### Recommended reads
+
+* [Map - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
 
 ### 18. Async Await
 
@@ -1256,6 +1301,10 @@ getData(['dakshshah96', 'addyosmani']);
 
 * Async/Await does not make Promises obsolete. When working with Async/Await we are still using Promises under the hood. Using a single promise is straightforward. However, when we need to program complicated asynchronous logic, we may end up combining a few promises. Writing all the `then` clauses and anonymous callbacks can easily get out of hand.
 * Async/Await doesn't always cut it. For example, when we need to make multiple independent asynchronous calls and wait for all of them to finish. To send all requests at the same time a `Promise.all()` is required. This will make sure we still have all the results before continuing, but the asynchronous calls will be firing in parallel, not one after another.
+
+#### Recommended reads
+
+* [Await and Async Explained with Diagrams and Examples](http://nikgrozev.com/2017/10/01/async-await/)
 
 ### 19. New object methods
 
